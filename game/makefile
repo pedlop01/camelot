@@ -1,27 +1,25 @@
-# Project: CamelotRemake
-
-CPP  = g++
-CC   = gcc
-OBJ  = animation.o character.o entradasortida.o main.o mundo.o sprite.o static_image.o enemigo.o enemyhandler.o checkpointhandler.o scripthandler.o script.o symboltable.o objeto.o objecthandler.o fxhandler.o phase_info.o characterstatehandler.o keyboardmap.o graphicsfxpostprocessing.o watergraphicfx.o scrollhandler.o game.o timer.o machinimiahandler.o messageboxhandler.o $(RES)
-LINKOBJ  = animation.o character.o entradasortida.o main.o mundo.o sprite.o static_image.o enemigo.o enemyhandler.o checkpointhandler.o scripthandler.o script.o symboltable.o objeto.o objecthandler.o fxhandler.o phase_info.o characterstatehandler.o keyboardmap.o graphicsfxpostprocessing.o watergraphicfx.o scrollhandler.o game.o timer.o machinimiahandler.o messageboxhandler.o $(RES)
-LIBS = -lalleg
-INCS =
-CXXINCS =  
-BIN  = camelotremake
-CXXFLAGS = $(CXXINCS) -static -O2
-CFLAGS = $(INCS) -static -O2
+CPP  = g++ -D__DEBUG__
+CC   = gcc -D__DEBUG__
+OBJ  = animation.o character.o entradasortida.o main.o mundo.o sprite.o static_image.o enemigo.o enemyhandler.o checkpointhandler.o scripthandler.o script.o symboltable.o objeto.o objecthandler.o fxhandler.o phase_info.o characterstatehandler.o keyboardmap.o graphicsfxpostprocessing.o watergraphicfx.o scrollhandler.o game.o timer.o machinimiahandler.o messageboxhandler.o
+LINKOBJ  = $(OBJ)
+LIBS = -L"/usr/lib" -lalleg -lallegro -lallegro_image -lallegro_primitives -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec -pthread -g
+INCS = -I"/usr/include"
+CXXINCS = -I"/usr/include/c++/11" -I"/usr/include/c++/11/backward" -I"/usr/include"
+BIN  = CamelotRemake.exe
+CXXFLAGS = $(CXXINCS) -DALLEGRO -g
+CFLAGS = $(INCS) -DALLEGRO_STATICLINK -g
 RM = rm -f
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before camelotremake all-after
+all: all-before CamelotRemake.exe all-after
 
 
 clean: clean-custom
 	${RM} $(OBJ) $(BIN)
 
 $(BIN): $(OBJ)
-	$(CPP) $(LINKOBJ) -o "camelotremake" $(LIBS)
+	$(CPP) $(LINKOBJ) -o "CamelotRemake.exe" $(LIBS)
 
 animation.o: animation.cpp
 	$(CPP) -c animation.cpp -o animation.o $(CXXFLAGS)
